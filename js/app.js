@@ -27,7 +27,6 @@ function myInit() {
     listOfOpenCards = [];
 
     displayCards();
-
     setCardsEventListener();
 
 }
@@ -93,22 +92,28 @@ function setCardsEventListener() {
     deck.addEventListener('click', displayCardSymbol);
 }
 
+// display the card's symbol
 function displayCardSymbol(event) {
     let cardNode = event.target;
 
+    // check if card node is a LI and that it has only one class. It should have only class 'card' to advance
     if (cardNode.nodeName === "LI") {
         if (cardNode.classList.length === 1) {
             cardNode.classList.add("open", "show");
 
+            // time interval to let user see open cards
             setTimeout(function() { checkOpenCard(cardNode); }, 1000);
         }
     }
 }
 
 function checkOpenCard(cardNode) {
+    // add the card to a *list* of "open" cards
     listOfOpenCards.push(cardNode);
 
+    // if the list already has another card
     if (listOfOpenCards.length === 2) {
+        // check to see if the two cards match
         if (listOfOpenCards[0].firstChild.classList[1] === listOfOpenCards[1].firstChild.classList[1]) {
             for (let i = 0; i < 2; i++) {
                 listOfOpenCards[i].classList.remove("open", "show");
@@ -121,7 +126,7 @@ function checkOpenCard(cardNode) {
             }
         }
 
-        //clear list of open cards
+        // clear list of open cards
         listOfOpenCards = [];
 
         // increment moves counter

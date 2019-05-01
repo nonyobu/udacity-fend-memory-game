@@ -5,6 +5,11 @@ const listOfCards = ["diamond", "paper-plane-o", "anchor", "bolt", "cube", "leaf
     "diamond", "paper-plane-o", "anchor", "bolt", "cube", "leaf", "bicycle", "bomb"
 ];
 
+/* Create list of open cards */
+let listOfOpenCards = [];
+
+let movesCounter = 0;
+
 
 /*
  * Initial setup of game
@@ -13,6 +18,13 @@ function myInit() {
 
     // Set event listener for restart button
     document.querySelector(".restart").addEventListener("click", restart);
+
+    // set moves to zero
+    movesCounter = 0;
+    document.querySelector(".moves").textContent = movesCounter;
+
+    // set list of open cards to null
+    listOfOpenCards = [];
 
     displayCards();
 
@@ -77,12 +89,60 @@ function shuffle(array) {
  *    + if all cards have matched, display a message with the final score (put this functionality in another function that you call from this one)
  */
 function setCardsEventListener() {
+    let deck = document.querySelector(".deck");
+    deck.addEventListener('click', displayCardSymbol);
+}
 
+function displayCardSymbol(event) {
+    let cardNode = event.target;
+
+    if (cardNode.nodeName === "LI") {
+        if (cardNode.classList.length === 1) {
+            cardNode.classList.add("open", "show");
+
+            setTimeout(function() { checkOpenCard(cardNode); }, 1000);
+        }
+    }
+}
+
+function checkOpenCard(cardNode) {
+    listOfOpenCards.push(cardNode);
+
+    if (listOfOpenCards.length === 2) {
+        if (listOfOpenCards[0].firstChild.classList[1] === listOfOpenCards[1].firstChild.classList[1]) {
+            for (let i = 0; i < 2; i++) {
+                listOfOpenCards[i].classList.remove("open", "show");
+                listOfOpenCards[i].classList.add("match");
+            }
+
+        } else {
+            for (let i = 0; i < 2; i++) {
+                listOfOpenCards[i].classList.remove("open", "show");
+            }
+        }
+
+        //clear list of open cards
+        listOfOpenCards = [];
+
+        // increment moves counter
+        movesCounter += 1;
+        document.querySelector(".moves").textContent = movesCounter;
+
+        // check if all cards have been matched
+        if (document.querySelectorAll(".match").length === listOfCards.length) {
+            showFinalScore();
+        }
+    }
+}
+
+
+function showFinalScore() {
+    alert("Congratulations!");
 }
 
 
 /*
- *	 Function to restart game
+ *	 restart the game
  */
 function restart() {
     // Remove all nodes from deck

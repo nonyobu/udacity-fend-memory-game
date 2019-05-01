@@ -120,6 +120,7 @@ function checkOpenCard(cardNode) {
             unmatchCards();
         }
 
+        // increment the move counter
         updateMoveCounter();
 
         // clear list of open cards
@@ -153,7 +154,7 @@ function updateMoveCounter() {
     document.querySelector(".moves").textContent = movesCounter;
 }
 
-
+// display a message with the final score
 function showFinalScore() {
     alert("Congratulations!");
 }

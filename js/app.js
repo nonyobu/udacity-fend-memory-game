@@ -115,29 +115,42 @@ function checkOpenCard(cardNode) {
     if (listOfOpenCards.length === 2) {
         // check to see if the two cards match
         if (listOfOpenCards[0].firstChild.classList[1] === listOfOpenCards[1].firstChild.classList[1]) {
-            for (let i = 0; i < 2; i++) {
-                listOfOpenCards[i].classList.remove("open", "show");
-                listOfOpenCards[i].classList.add("match");
-            }
-
+            matchCards();
         } else {
-            for (let i = 0; i < 2; i++) {
-                listOfOpenCards[i].classList.remove("open", "show");
-            }
+            unmatchCards();
         }
+
+        updateMoveCounter();
 
         // clear list of open cards
         listOfOpenCards = [];
 
-        // increment moves counter
-        movesCounter += 1;
-        document.querySelector(".moves").textContent = movesCounter;
-
         // check if all cards have been matched
         if (document.querySelectorAll(".match").length === listOfCards.length) {
-            showFinalScore();
+            setTimeout(function() { showFinalScore(); }, 2000);
         }
     }
+}
+
+// lock the cards in the open position
+function matchCards() {
+    for (let i = 0; i < listOfOpenCards.length; i++) {
+        listOfOpenCards[i].classList.remove("open", "show");
+        listOfOpenCards[i].classList.add("match");
+    }
+}
+
+// remove the cards from the list and hide the card's symbol
+function unmatchCards() {
+    for (let i = 0; i < 2; i++) {
+        listOfOpenCards[i].classList.remove("open", "show");
+    }
+}
+
+// increment the move counter and display it on the page
+function updateMoveCounter() {
+    movesCounter += 1;
+    document.querySelector(".moves").textContent = movesCounter;
 }
 
 

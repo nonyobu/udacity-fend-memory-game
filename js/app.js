@@ -5,7 +5,21 @@ const listOfCards = ["diamond", "paper-plane-o", "anchor", "bolt", "cube", "leaf
     "diamond", "paper-plane-o", "anchor", "bolt", "cube", "leaf", "bicycle", "bomb"
 ];
 
-displayCards();
+
+/*
+ * Initial setup of game
+ */
+function myInit() {
+
+    // Set event listener for restart button
+    document.querySelector(".restart").addEventListener("click", restart);
+
+    displayCards();
+
+    setCardsEventListener();
+
+}
+
 
 /*
  * Display the cards on the page
@@ -62,3 +76,26 @@ function shuffle(array) {
  *    + increment the move counter and display it on the page (put this functionality in another function that you call from this one)
  *    + if all cards have matched, display a message with the final score (put this functionality in another function that you call from this one)
  */
+function setCardsEventListener() {
+
+}
+
+
+/*
+ *	 Function to restart game
+ */
+function restart() {
+    // Remove all nodes from deck
+    // Snippet from https://stackoverflow.com/a/3955238
+    let deckNode = document.querySelector('.deck');
+
+    while (deckNode.firstChild) {
+        deckNode.removeChild(deckNode.firstChild);
+    }
+
+    // Reinitialize elements after some time so that user can see cards removed
+    setTimeout(myInit, 300);
+}
+
+
+myInit();

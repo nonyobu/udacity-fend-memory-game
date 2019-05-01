@@ -1,9 +1,9 @@
 /*
  * Create a list that holds all of your cards
  */
-const listOfCards = ["diamond", "paper-plane-o", "anchor", "bolt", "cube", "leaf", "bicycle", "bomb",
-    "diamond", "paper-plane-o", "anchor", "bolt", "cube", "leaf", "bicycle", "bomb"
-];
+const baseCards = ["gem", "paper-plane", "anchor", "bolt", "cube", "leaf", "bicycle", "bomb"];
+
+const listOfCards = baseCards.concat(baseCards);
 
 /* Create list of open cards */
 let listOfOpenCards = [];
@@ -40,6 +40,7 @@ function myInit() {
  */
 function displayCards() {
     let listOfShuffledCards = shuffle(listOfCards);
+    //let listOfShuffledCards = listOfCards;    // for easy testing
 
     const fragment = document.createDocumentFragment();
 
@@ -49,7 +50,7 @@ function displayCards() {
         cardNode.className = "card";
 
         const cardFace = document.createElement("i");
-        cardFace.className = `fa fa-${listOfShuffledCards[i]}`;
+        cardFace.className = `fas fa-${listOfShuffledCards[i]}`;
 
         cardNode.appendChild(cardFace);
         fragment.appendChild(cardNode);
@@ -156,7 +157,7 @@ function updateMoveCounter() {
 
 // display a message with the final score
 function showFinalScore() {
-    alert("Congratulations!");
+    modal.style.display = "block";
 }
 
 
@@ -174,6 +175,24 @@ function restart() {
 
     // Reinitialize elements after some time so that user can see cards removed
     setTimeout(myInit, 300);
+}
+
+// Get the modal
+let modal = document.getElementById('scoreModal');
+
+// Get the <span> element that closes the modal
+const modalClose = document.getElementById("modalClose");
+
+// When the user clicks on <span> (x), close the modal
+modalClose.onclick = function() {
+    modal.style.display = "none";
+}
+
+// When the user clicks anywhere outside of the modal, close it
+window.onclick = function(event) {
+    if (event.target == modal) {
+        modal.style.display = "none";
+    }
 }
 
 

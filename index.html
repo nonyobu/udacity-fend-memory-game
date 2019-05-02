@@ -27,19 +27,41 @@
             <span class="moves">0</span> Moves
 
             <div class="restart">
-                <i class="far fa-repeat" title="restart"></i>
+                <i class="far fa-repeat" title="Restart Game"></i>
             </div>
         </section>
 
         <ul class="deck"></ul>
     </div>
 
-    <!-- The Modal -->
+    <!-- Score Modal -->
     <div id="scoreModal" class="modal">
 
         <!-- Modal content -->
         <div class="modal-content">
-            <span id="modalClose" class="close">&times;</span>
+            <span id="scoreModalClose" class="close">&times;</span>
+            <h1>Congratulations!</h1>
+            <p>You've completed the game</p>
+            <h2>You scored</h2>
+            <section class="score-panel">
+                <ul class="stars">
+                    <li><i class="fas fa-star"></i></li>
+                    <li><i class="fas fa-star-half-alt"></i></li>
+                    <li><i class="far fa-star"></i></li>
+                </ul>
+
+                In <span class="moves">0</span> Moves
+            </section>
+        </div>
+
+    </div>
+
+    <!-- Leaderboard Modal -->
+    <div id="leaderModal" class="modal">
+
+        <!-- Modal content -->
+        <div class="modal-content">
+            <span id="leaderModalClose" class="close">&times;</span>
             <h1>Congratulations!</h1>
             <p>You've completed the game</p>
             <h2>You scored</h2>

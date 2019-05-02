@@ -3,11 +3,12 @@
  */
 const baseCards = ["gem", "paper-plane", "anchor", "bolt", "cube", "leaf", "bicycle", "bomb"];
 
-const listOfCards = baseCards.concat(baseCards);
+const listOfCards = baseCards.concat(baseCards); // uses the base cards to have paired cards
 
-/* Create list of open cards */
+// Create list of open cards
 let listOfOpenCards = [];
 
+// Global counter to count in game moves
 let movesCounter = 0;
 
 
@@ -181,7 +182,7 @@ function restart() {
 let modal = document.getElementById('scoreModal');
 
 // Get the <span> element that closes the modal
-const modalClose = document.getElementById("modalClose");
+const modalClose = document.getElementById("scoreModalClose");
 
 // When the user clicks on <span> (x), close the modal
 modalClose.onclick = function() {

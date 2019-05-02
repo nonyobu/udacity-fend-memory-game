@@ -18,16 +18,18 @@
         </header>
 
         <section class="score-panel">
-            <ul class="stars">
+            <ul id="gameStars" class="stars">
                 <li><i class="fas fa-star"></i></li>
                 <li><i class="fas fa-star"></i></li>
                 <li><i class="fas fa-star"></i></li>
             </ul>
 
-            <span class="moves">0</span> Moves
+            <span id="timer" class="moves"></span>
+
+            <span id="moves" class="moves">0</span> Moves
 
             <div class="restart">
-                <i class="far fa-repeat" title="Restart Game"></i>
+                <i class="fas fa-redo" title="Restart Game"></i>
             </div>
         </section>
 
@@ -41,16 +43,15 @@
         <div class="modal-content">
             <span id="scoreModalClose" class="close">&times;</span>
             <h1>Congratulations!</h1>
-            <p>You've completed the game</p>
             <h2>You scored</h2>
             <section class="score-panel">
-                <ul class="stars">
-                    <li><i class="fas fa-star"></i></li>
-                    <li><i class="fas fa-star-half-alt"></i></li>
-                    <li><i class="far fa-star"></i></li>
+                <ul id="scoreStars" class="stars">
+                    <li><i class=""></i></li>
+                    <li><i class=""></i></li>
+                    <li><i class=""></i></li>
                 </ul>
 
-                In <span class="moves">0</span> Moves
+                With <span id="scoreMoves" class="moves">0</span> Moves In <span id="scoreTime" class="moves"></span>
             </section>
         </div>
 

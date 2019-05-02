@@ -8,8 +8,11 @@ const listOfCards = baseCards.concat(baseCards); // uses the base cards to have 
 // Create list of open cards
 let listOfOpenCards = [];
 
-// Global counter to count in game moves
-let movesCounter = 0;
+// in game moves counter declaration
+let movesCounter;
+
+// game timer vars declaration
+let timeVar, timerCount
 
 
 /*
@@ -22,7 +25,7 @@ function myInit() {
 
     // set moves to zero
     movesCounter = 0;
-    document.querySelector(".moves").textContent = movesCounter;
+    document.getElementById("moves").textContent = movesCounter;
 
     // set list of open cards to null
     listOfOpenCards = [];
@@ -30,6 +33,34 @@ function myInit() {
     displayCards();
     setCardsEventListener();
 
+    // game timer vars initialization
+    timerCount = 0;
+    timeVar = setInterval(function() {
+        ++timerCount;
+        const calculatedTime = getTimeFromNumber(timerCount);
+        // Display the result in the element with id="demo"
+        document.getElementById("timer").textContent = `${calculatedTime[1]}:${calculatedTime[2]}`;
+    }, 1000);
+
+}
+
+/*
+ *  Get an array with calculated time from a number
+ */
+function getTimeFromNumber(num) {
+    // Time calculations for hours, minutes and seconds
+    const hours = Math.floor(timerCount / 3600);
+    const minutes = Math.floor((timerCount - hours * 3600) / 60);
+    const seconds = Math.floor(timerCount - (hours * 3600 + minutes * 60));
+
+    const calculatedTime = [hours, checkTime(minutes), checkTime(seconds)];
+
+    return calculatedTime;
+}
+
+function checkTime(i) {
+    if (i < 10) { i = "0" + i }; // add zero in front of numbers < 10
+    return i;
 }
 
 
@@ -41,7 +72,7 @@ function myInit() {
  */
 function displayCards() {
     let listOfShuffledCards = shuffle(listOfCards);
-    //let listOfShuffledCards = listOfCards;    // for easy testing
+    /* let listOfShuffledCards = listOfCards; // for easy testing */
 
     const fragment = document.createDocumentFragment();
 
@@ -110,7 +141,7 @@ function displayCardSymbol(event) {
 }
 
 function checkOpenCard(cardNode) {
-    // add the card to a *list* of "open" cards
+    // add the card to a list of "open" cards
     listOfOpenCards.push(cardNode);
 
     // if the list already has another card
@@ -125,12 +156,21 @@ function checkOpenCard(cardNode) {
         // increment the move counter
         updateMoveCounter();
 
+        // update stars
+        if (movesCounter > 16) {
+            updateGameStars("gameStars", getUpdatedStarsClasses());
+        }
+
         // clear list of open cards
         listOfOpenCards = [];
 
-        // check if all cards have been matched
+        // check if all cards have been matched,
         if (document.querySelectorAll(".match").length === listOfCards.length) {
-            setTimeout(function() { showFinalScore(); }, 2000);
+            // stop game time counter
+            clearInterval(timeVar);
+
+            // show final score
+            setTimeout(showFinalScore, 2000);
         }
     }
 }
@@ -153,12 +193,68 @@ function unmatchCards() {
 // increment the move counter and display it on the page
 function updateMoveCounter() {
     movesCounter += 1;
-    document.querySelector(".moves").textContent = movesCounter;
+    document.getElementById("moves").textContent = movesCounter;
 }
 
-// display a message with the final score
+/*
+ * END GAME
+ *
+ * Display a message with the final score
+ *
+ */
 function showFinalScore() {
-    modal.style.display = "block";
+    // final moves
+    //const finalMoves = document.getElementById("scoreMoves");
+    document.getElementById("scoreMoves").textContent = movesCounter;
+
+    // final time
+    //const finalTime = document.getElementById("scoreTime");
+    const calculatedTime = getTimeFromNumber(timerCount);
+    document.getElementById("scoreTime").textContent = `${calculatedTime[1]}:${calculatedTime[2]}`;
+
+    // final score
+    updateGameStars("scoreStars", getUpdatedStarsClasses());
+
+    modal.style.display = "block"; // display modal
+}
+
+
+// Update visual display of stars in game
+function updateGameStars(place, starsClasses) {
+    let starsList = document.getElementById(place);
+    for (let i = 0; i < 3; i++) {
+        starsList.children[i].firstChild.className = starsClasses[i];
+    }
+
+}
+
+
+function getUpdatedStarsClasses() {
+    let stars = [];
+    switch (true) {
+        case (movesCounter > 26):
+            stars = ["far fa-star", "far fa-star", "far fa-star"];
+            break;
+        case (movesCounter > 24):
+            stars = ["fas fa-star-half-alt", "far fa-star", "far fa-star"];
+            break;
+        case (movesCounter > 22):
+            stars = ["fas fa-star", "far fa-star", "far fa-star"];
+            break;
+        case (movesCounter > 20):
+            stars = ["fas fa-star", "fas fa-star-half-alt", "far fa-star"];
+            break;
+        case (movesCounter > 18):
+            stars = ["fas fa-star", "fas fa-star", "far fa-star"];
+            break;
+        case (movesCounter > 16):
+            stars = ["fas fa-star", "fas fa-star", "fas fa-star-half-alt"];
+            break;
+        default:
+            stars = ["fas fa-star", "fas fa-star", "fas fa-star"];
+            break;
+    }
+    return stars;
 }
 
 

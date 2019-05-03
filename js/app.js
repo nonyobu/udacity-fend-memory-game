@@ -241,7 +241,7 @@ function showFinalScore() {
     // final score
     setGameStars("scoreStars", getStarClasses(getNumberOfStars()));
 
-    scoreModal.style.display = "block"; // display modal
+    modal.style.display = "block"; // display modal
 }
 
 
@@ -342,29 +342,20 @@ function restart() {
  */
 
 // Get the  modal
-const scoreModal = document.getElementById("scoreModal");
-const leaderboardModal = document.getElementById("leaderboardModal");
+const modal = document.getElementById("modal");
 
 // Get the <span> element that closes the modal
-const scoreModalClose = document.getElementById("scoreModalClose");
-const leaderboardModalClose = document.getElementById("leaderboardModalClose");
+const modalClose = document.getElementById("modalClose");
 
 // When the user clicks on <span> (x), close the score modal
-scoreModalClose.onclick = function() {
-    scoreModal.style.display = "none";
-}
-
-// When the user clicks on <span> (x), close the leaderboard modal
-leaderboardModalClose.onclick = function() {
-    leaderboardModal.style.display = "none";
+modalClose.onclick = function() {
+    modal.style.display = "none";
 }
 
 // When the user clicks anywhere outside of the modal, close it
 window.onclick = function(event) {
-    if (event.target == scoreModal) {
-        scoreModal.style.display = "none";
-    } else if (event.target == leaderboardModal) {
-        leaderboardModal.style.display = "none";
+    if (event.target == modal) {
+        modal.style.display = "none";
     }
 }
 

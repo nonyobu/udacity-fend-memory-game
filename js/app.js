@@ -230,13 +230,13 @@ function updateMoveCounter() {
  */
 function showFinalScore() {
     // final moves
-    // const finalMoves = document.getElementById("scoreMoves");
-    // document.getElementById("scoreMoves").textContent = movesCounter;
+    let finalScoreDetails = document.getElementById("score-details");
+    const finalMoves = document.getElementById("scoreMoves");
+    const calculatedTime = getTimeFromNumber(timerCount);
 
-    // final time
-    // const finalTime = document.getElementById("scoreTime");
-    // const calculatedTime = getTimeFromNumber(timerCount);
-    // document.getElementById("scoreTime").textContent = `${calculatedTime[1]}:${calculatedTime[2]}`;
+    const finalTime = `${calculatedTime[1]} : ${calculatedTime[2]}`
+
+    finalScoreDetails.textContent = `In ${finalTime} With ${movesCounter} Moves`;
 
     // final score
     setGameStars("scoreStars", getStarClasses(getNumberOfStars()));

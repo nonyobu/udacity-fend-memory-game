@@ -34,6 +34,7 @@ function myInit() {
 
     // game timer vars initialization
     timerCount = 0;
+
     timeVar = setInterval(function() {
         ++timerCount;
         const calculatedTime = getTimeFromNumber(timerCount);
@@ -326,6 +327,9 @@ function getStarClasses(numberOfStars) {
 function restart() {
     // Remove all nodes from deck
     let deckNode = document.querySelector('.deck');
+
+    // stop game time counter
+    clearInterval(timeVar);
 
     while (deckNode.firstChild) {
         deckNode.removeChild(deckNode.firstChild);

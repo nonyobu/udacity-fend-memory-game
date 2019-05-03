@@ -2,7 +2,6 @@
  * Create a list that holds all of your cards
  */
 const baseCards = ["gem", "paper-plane", "anchor", "bolt", "cube", "leaf", "bicycle", "bomb"];
-
 const listOfCards = baseCards.concat(baseCards); // uses the base cards to have paired cards
 
 // Create list of open cards
@@ -38,7 +37,6 @@ function myInit() {
     timeVar = setInterval(function() {
         ++timerCount;
         const calculatedTime = getTimeFromNumber(timerCount);
-        // Display the result in the element with id="demo"
         document.getElementById("timer").textContent = `${calculatedTime[1]}:${calculatedTime[2]}`;
     }, 1000);
 
@@ -48,6 +46,7 @@ function myInit() {
  * @description Get an array with calculated time from a number
  * @param {integer} num
  * @returns {(integer|array)} hours minutes and seconds in array
+ * @see [w3schools]{@link https://www.w3schools.com/howto/howto_js_countdown.asp}
  */
 function getTimeFromNumber(num) {
     // Time calculations for hours, minutes and seconds
@@ -64,6 +63,7 @@ function getTimeFromNumber(num) {
  * Add zero in front of numbers < 10
  * @param {integer} i 
  * @returns {string}
+ * @see [w3schools]{@link https://www.w3schools.com/js/tryit.asp?filename=tryjs_timing_clock}
  */
 function checkTime(i) {
     if (i < 10) { i = "0" + i };
@@ -83,7 +83,6 @@ function checkTime(i) {
  */
 function displayCards() {
     let listOfShuffledCards = shuffle(listOfCards);
-    /* let listOfShuffledCards = listOfCards; // for easy testing */
 
     const fragment = document.createDocumentFragment();
 

@@ -233,7 +233,7 @@ function showFinalScore() {
     const finalMoves = document.getElementById("scoreMoves");
     const calculatedTime = getTimeFromNumber(timerCount);
 
-    const finalTime = `${calculatedTime[1]} : ${calculatedTime[2]}`
+    const finalTime = `${calculatedTime[1]}:${calculatedTime[2]}`
 
     finalScoreDetails.textContent = `In ${finalTime} With ${movesCounter} Moves`;
 

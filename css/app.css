@@ -89,9 +89,7 @@ h1 {
  */
 
 .score-panel {
-    /* text-align: left; */
     width: 100%;
-    /* margin-bottom: 10px; */
 }
 
 .score-panel .stars {
@@ -107,13 +105,17 @@ h1 {
 }
 
 .restart {
-    /* text-align: center; */
-    /* float: right; */
     cursor: pointer;
 }
 
+.infoLabel {
+    font-size: 1em;
+    font-weight: bold;
+}
+
 .info {
-    vertical-align: baseline;
+    font-size: 1.3em;
+    font-weight: bolder;
 }
 
 
@@ -127,14 +129,12 @@ h1 {
 
 .row {
     width: 100%;
-    /* margin-bottom: 20px; */
     display: flex;
     flex-wrap: wrap;
 }
 
 .row * {
     text-align: center;
-    /* padding: 5px; */
     vertical-align: baseline;
 }
 

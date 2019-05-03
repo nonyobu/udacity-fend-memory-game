@@ -17,21 +17,36 @@
             <h1>Matching Game</h1>
         </header>
 
-        <section class="score-panel">
-            <ul id="gameStars" class="stars">
-                <li><i class="fas fa-star"></i></li>
-                <li><i class="fas fa-star"></i></li>
-                <li><i class="fas fa-star"></i></li>
-            </ul>
-
-            <span id="timer" class="moves"></span>
-
-            <span id="moves" class="moves">0</span> Moves
-
-            <div class="restart">
-                <i class="fas fa-redo" title="Restart Game"></i>
+        <div class="grid">
+            <div class="row">
+                <div class="col-4">
+                    <section class="score-panel">
+                        <ul id="gameStars" class="stars">
+                            <li><i class="fas fa-star"></i></li>
+                            <li><i class="fas fa-star"></i></li>
+                            <li><i class="fas fa-star"></i></li>
+                        </ul>
+                    </section>
+                </div>
+                <div class="col-4">
+                    <div class="restart">
+                        <i class="fas fa-redo" title="Restart Game"></i>
+                    </div>
+                </div>
+                <div class="col-4">
+                    <div class="row">
+                        <div class="col-12">
+                            Timer: <span id="timer" class=""></span>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-12">
+                            <span id="moves" class="">0</span> Moves
+                        </div>
+                    </div>
+                </div>
             </div>
-        </section>
+        </div>
 
         <ul class="deck"></ul>
     </div>

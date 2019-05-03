@@ -15,8 +15,8 @@ let movesCounter;
 let timeVar, timerCount
 
 
-/*
- * Initial setup of game
+/** 
+ * Initial game setup
  */
 function myInit() {
 
@@ -44,8 +44,10 @@ function myInit() {
 
 }
 
-/*
- *  Get an array with calculated time from a number
+/**
+ * @description Get an array with calculated time from a number
+ * @param {integer} num
+ * @returns {(integer|array)} hours minutes and seconds in array
  */
 function getTimeFromNumber(num) {
     // Time calculations for hours, minutes and seconds
@@ -58,8 +60,13 @@ function getTimeFromNumber(num) {
     return calculatedTime;
 }
 
+/**
+ * Add zero in front of numbers < 10
+ * @param {integer} i 
+ * @returns {string}
+ */
 function checkTime(i) {
-    if (i < 10) { i = "0" + i }; // add zero in front of numbers < 10
+    if (i < 10) { i = "0" + i };
     return i;
 }
 
@@ -69,6 +76,10 @@ function checkTime(i) {
  *   - shuffle the list of cards using the provided "shuffle" method below
  *   - loop through each card and create its HTML
  *   - add each card's HTML to the page
+ */
+
+/**
+ * @description Display the cards on the page
  */
 function displayCards() {
     let listOfShuffledCards = shuffle(listOfCards);
@@ -120,16 +131,23 @@ function shuffle(array) {
  *    + increment the move counter and display it on the page (put this functionality in another function that you call from this one)
  *    + if all cards have matched, display a message with the final score (put this functionality in another function that you call from this one)
  */
+
+/**
+ * @description sets event listener for clicking on deck
+ */
 function setCardsEventListener() {
     let deck = document.querySelector(".deck");
     deck.addEventListener('click', displayCardSymbol);
 }
 
-// display the card's symbol
+/**
+ * @description handle user clicking on card
+ * @param {object} event 
+ */
 function displayCardSymbol(event) {
     let cardNode = event.target;
 
-    // check if card node is a LI and that it has only one class. It should have only class 'card' to advance
+    // check if card node is a LI and that it has only one class (it should have only class 'card')
     if (cardNode.nodeName === "LI") {
         if (cardNode.classList.length === 1) {
             cardNode.classList.add("open", "show");
@@ -140,6 +158,10 @@ function displayCardSymbol(event) {
     }
 }
 
+/**
+ * @description manage open card by user
+ * @param {object} cardNode
+ */
 function checkOpenCard(cardNode) {
     // add the card to a list of "open" cards
     listOfOpenCards.push(cardNode);
@@ -158,7 +180,7 @@ function checkOpenCard(cardNode) {
 
         // update stars
         if (movesCounter > 16) {
-            updateGameStars("gameStars", getUpdatedStarsClasses());
+            setGameStars("gameStars", getStarClasses(getNumberOfStars()));
         }
 
         // clear list of open cards
@@ -175,7 +197,9 @@ function checkOpenCard(cardNode) {
     }
 }
 
-// lock the cards in the open position
+/**
+ * @description lock the cards in the open position
+ */
 function matchCards() {
     for (let i = 0; i < listOfOpenCards.length; i++) {
         listOfOpenCards[i].classList.remove("open", "show");
@@ -183,87 +207,125 @@ function matchCards() {
     }
 }
 
-// remove the cards from the list and hide the card's symbol
+/**
+ * @description remove cards from the list and hide it's symbol
+ */
 function unmatchCards() {
     for (let i = 0; i < 2; i++) {
         listOfOpenCards[i].classList.remove("open", "show");
     }
 }
 
-// increment the move counter and display it on the page
+/**
+ * @description increment the move counter and display it on the page
+ */
 function updateMoveCounter() {
-    movesCounter += 1;
+    movesCounter++;
     document.getElementById("moves").textContent = movesCounter;
 }
 
-/*
- * END GAME
- *
- * Display a message with the final score
- *
+
+/**
+ * @description Display modal with the final score
  */
 function showFinalScore() {
     // final moves
-    //const finalMoves = document.getElementById("scoreMoves");
-    document.getElementById("scoreMoves").textContent = movesCounter;
+    // const finalMoves = document.getElementById("scoreMoves");
+    // document.getElementById("scoreMoves").textContent = movesCounter;
 
     // final time
-    //const finalTime = document.getElementById("scoreTime");
-    const calculatedTime = getTimeFromNumber(timerCount);
-    document.getElementById("scoreTime").textContent = `${calculatedTime[1]}:${calculatedTime[2]}`;
+    // const finalTime = document.getElementById("scoreTime");
+    // const calculatedTime = getTimeFromNumber(timerCount);
+    // document.getElementById("scoreTime").textContent = `${calculatedTime[1]}:${calculatedTime[2]}`;
 
     // final score
-    updateGameStars("scoreStars", getUpdatedStarsClasses());
+    setGameStars("scoreStars", getStarClasses(getNumberOfStars()));
 
-    modal.style.display = "block"; // display modal
+    scoreModal.style.display = "block"; // display modal
 }
 
 
-// Update visual display of stars in game
-function updateGameStars(place, starsClasses) {
+/**
+ * @description Set visual display of stars in game
+ * @param {string} place 
+ * @param {array} starClasses 
+ */
+function setGameStars(place, starClasses) {
     let starsList = document.getElementById(place);
     for (let i = 0; i < 3; i++) {
-        starsList.children[i].firstChild.className = starsClasses[i];
+        starsList.children[i].firstChild.className = starClasses[i];
     }
-
 }
 
 
-function getUpdatedStarsClasses() {
-    let stars = [];
-    switch (true) {
-        case (movesCounter > 26):
-            stars = ["far fa-star", "far fa-star", "far fa-star"];
+/**
+ * @description Gets number of stars based on game moves
+ * @returns {float} numberOfStars
+ * @see [Stackoverflow]{@link https://stackoverflow.com/a/5619997}
+ * Was planning to use "trick" from this answer for a switch case
+ * But, after reading comments on answer decided to for go for "if else"
+ */
+function getNumberOfStars() {
+    let numberOfStars = 0;
+    if (movesCounter > 26) {
+        numberOfStars = 0;
+    } else if (movesCounter > 24) {
+        numberOfStars = 0.5;
+    } else if (movesCounter > 22) {
+        numberOfStars = 1;
+    } else if (movesCounter > 20) {
+        numberOfStars = 1.5;
+    } else if (movesCounter > 18) {
+        numberOfStars = 2;
+    } else if (movesCounter > 16) {
+        numberOfStars = 2.5;
+    } else {
+        numberOfStars = 3;
+    }
+    return numberOfStars;
+}
+
+/**
+ * @description gets classe names based on game stars
+ * @see {@link getNumberOfStars}
+ * @param {float} numberOfStars - game stars
+ * @returns {(string|array)} stars classes
+ */
+function getStarClasses(numberOfStars) {
+    let starClasses = [];
+    switch (numberOfStars) {
+        case 0:
+            starClasses = ["far fa-star", "far fa-star", "far fa-star"];
             break;
-        case (movesCounter > 24):
-            stars = ["fas fa-star-half-alt", "far fa-star", "far fa-star"];
+        case 0.5:
+            starClasses = ["fas fa-star-half-alt", "far fa-star", "far fa-star"];
             break;
-        case (movesCounter > 22):
-            stars = ["fas fa-star", "far fa-star", "far fa-star"];
+        case 1:
+            starClasses = ["fas fa-star", "far fa-star", "far fa-star"];
             break;
-        case (movesCounter > 20):
-            stars = ["fas fa-star", "fas fa-star-half-alt", "far fa-star"];
+        case 1.5:
+            starClasses = ["fas fa-star", "fas fa-star-half-alt", "far fa-star"];
             break;
-        case (movesCounter > 18):
-            stars = ["fas fa-star", "fas fa-star", "far fa-star"];
+        case 2:
+            starClasses = ["fas fa-star", "fas fa-star", "far fa-star"];
             break;
-        case (movesCounter > 16):
-            stars = ["fas fa-star", "fas fa-star", "fas fa-star-half-alt"];
+        case 2.5:
+            starClasses = ["fas fa-star", "fas fa-star", "fas fa-star-half-alt"];
             break;
         default:
-            stars = ["fas fa-star", "fas fa-star", "fas fa-star"];
+            starClasses = ["fas fa-star", "fas fa-star", "fas fa-star"];
             break;
     }
-    return stars;
+    return starClasses;
 }
 
 
-/*
- *	 restart the game
+/**
+ * @description Restart the game
+ * @see [Stackoverflow]{@link https://stackoverflow.com/a/3955238}
  */
 function restart() {
     // Remove all nodes from deck
-    // Snippet from https://stackoverflow.com/a/3955238
     let deckNode = document.querySelector('.deck');
 
     while (deckNode.firstChild) {
@@ -274,23 +336,37 @@ function restart() {
     setTimeout(myInit, 300);
 }
 
-// Get the modal
-let modal = document.getElementById('scoreModal');
+/**
+ * Setup modals
+ * @see [w3schools]{@link https://www.w3schools.com/howto/howto_css_modals.asp}
+ */
+
+// Get the  modal
+const scoreModal = document.getElementById("scoreModal");
+const leaderboardModal = document.getElementById("leaderboardModal");
 
 // Get the <span> element that closes the modal
-const modalClose = document.getElementById("scoreModalClose");
+const scoreModalClose = document.getElementById("scoreModalClose");
+const leaderboardModalClose = document.getElementById("leaderboardModalClose");
 
-// When the user clicks on <span> (x), close the modal
-modalClose.onclick = function() {
-    modal.style.display = "none";
+// When the user clicks on <span> (x), close the score modal
+scoreModalClose.onclick = function() {
+    scoreModal.style.display = "none";
+}
+
+// When the user clicks on <span> (x), close the leaderboard modal
+leaderboardModalClose.onclick = function() {
+    leaderboardModal.style.display = "none";
 }
 
 // When the user clicks anywhere outside of the modal, close it
 window.onclick = function(event) {
-    if (event.target == modal) {
-        modal.style.display = "none";
+    if (event.target == scoreModal) {
+        scoreModal.style.display = "none";
+    } else if (event.target == leaderboardModal) {
+        leaderboardModal.style.display = "none";
     }
 }
 
-
-myInit();
+// initiate game setup after dom content load
+document.addEventListener('DOMContentLoaded', myInit());

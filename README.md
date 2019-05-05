@@ -3,7 +3,6 @@
 ## Table of Contents
 
 * [Introduction](#introduction)
-* [Details](#details)
 
 ## Introduction
 This is a project for [Udacity](www.udacity.com) FEND Nanodegree.

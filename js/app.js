@@ -235,7 +235,8 @@ function showFinalScore() {
 
     const finalTime = `${calculatedTime[1]}:${calculatedTime[2]}`
 
-    finalScoreDetails.textContent = `In ${finalTime} With ${movesCounter} Moves`;
+    /* finalScoreDetails.textContent = `In ${finalTime} With ${movesCounter} Moves`; */
+    finalScoreDetails.innerHTML = `<span class="infoLabel">In</span> <span class="info">${finalTime}</span> <span class="infoLabel">With</span> <span class="info">${movesCounter}</span> <span class="infoLabel">Moves</span>`;
 
     // final score
     setGameStars("scoreStars", getStarClasses(getNumberOfStars()));

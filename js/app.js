@@ -19,9 +19,6 @@ let timeVar, timerCount
  */
 function myInit() {
 
-    // Set event listener for restart button
-    document.querySelector(".restart").addEventListener("click", restart);
-
     // set moves to zero
     movesCounter = 0;
     document.getElementById("moves").textContent = movesCounter;
@@ -41,6 +38,8 @@ function myInit() {
         document.getElementById("timer").textContent = `${calculatedTime[1]}:${calculatedTime[2]}`;
     }, 1000);
 
+    // Set event listener for restart button
+    document.querySelector(".restart").addEventListener("click", restart);
 }
 
 /**
@@ -325,11 +324,14 @@ function getStarClasses(numberOfStars) {
  * @see [Stackoverflow]{@link https://stackoverflow.com/a/3955238}
  */
 function restart() {
-    // Remove all nodes from deck
-    let deckNode = document.querySelector('.deck');
-
     // stop game time counter
     clearInterval(timeVar);
+
+    // remove event listener for restart
+    document.querySelector(".restart").removeEventListener("click", restart);
+
+    // Remove all nodes from deck
+    let deckNode = document.querySelector('.deck');
 
     while (deckNode.firstChild) {
         deckNode.removeChild(deckNode.firstChild);
